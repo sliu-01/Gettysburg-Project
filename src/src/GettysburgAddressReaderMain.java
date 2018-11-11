@@ -26,38 +26,44 @@ public class GettysburgAddressReaderMain
 				if (word.substring(i - 1,  i).equals("."))
 				{
 					word = word.substring(0, i - 1) + word.substring(i, word.length());
-				}
-				
+				}				
 				else if (word.substring(i - 1,  i).equals(","))
+				{
+					word = word.substring(0, i - 1) + word.substring(i, word.length());
+				}
+				else if (word.substring(i - 1,  i).equals(" "))
 				{
 					word = word.substring(0, i - 1) + word.substring(i, word.length());
 				}
 				else if (word.substring(i - 1,  i).equals("-"))
 				{
-					word1 = word.substring(0, i - 1);
-					word2 = word.substring(i, word.length());
+					if (word.substring(i - 2,  i).equals("--"))
+					{
+						word1 = word.substring(0, i - 2);
+						word2 = word.substring(i, word.length());
+						word = word.substring(0, i - 2) + " ";
+					}
+					else
+					{
+						word1 = word.substring(0, i - 1);
+						word2 = word.substring(i, word.length());
+						word = word.substring(0, i - 1);
+					}
 				}
 			}
-			for (int i = word.length(); i > 1; i--)
-			{
-				if (word.substring(i - 2,  i).equals("--"))
-				{
-					word1 = word.substring(0, i - 2);
-					word2 = word.substring(i, word.length());
-				}
-			}
-			if (word1.equals(""))
+			if (word2.equals(""))
 			{
 				strings.add(word);
 				wordCount++;
 			}
-			else if (!word1.equals(""))
+			else if (!word2.equals(""))
 			{
 				strings.add(word1);
+				word1 = "";
 				strings.add(word2);
+				word2 = "";
 				wordCount += 2;
 			}
-			wordCount++;
 		}
 		
 		ArrayList<String> longestWords = new ArrayList<String>();
@@ -89,7 +95,16 @@ public class GettysburgAddressReaderMain
 		
 		System.out.println("The longest word(s) is/are: " + printedListOfLongestWords );
 		System.out.println("The average word length is: " + average);
-		
+		//wordCount = 0;
+		//total = 0;
+		//for (int i = 0; i < strings.size(); i++)
+		//{
+		//	System.out.println(strings.get(i));
+		//	wordCount++;
+		//	total += strings.get(i).length();
+		//}
+		System.out.println("The total number of words is " + wordCount);
+		System.out.println("The total number of letters is " + total);
 	}
-
 }
+	
